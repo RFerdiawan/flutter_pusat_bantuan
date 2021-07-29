@@ -9,7 +9,7 @@ class AuthService extends Service{
       var url = '/login';
 
       var response = await postLogin2(url, data);
-      print(response);
+      print(response.data);
       if (response.statusCode == 200) {
         return response;
       } else {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_starter_provider/configs/constants/view_state.dart';
 import 'package:flutter_starter_provider/configs/router/router_app_string.dart';
 import 'package:flutter_starter_provider/presentations/views/base_view.dart';
 import 'package:flutter_starter_provider/providers/pusat_bantuan_provider.dart';
@@ -9,13 +10,23 @@ class PusatBantuan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseView<PusatBantuanProvider>(
+      onModelReady: (model)=> model.init(),
        builder: (context, provider, child){
          return Scaffold(
            appBar: AppBar(
              backgroundColor: Colors.indigo,
              title: Text('Pusat Bantuan'),
+             actions: [
+               Container(
+               child: IconButton(
+                 icon: Icon(Icons.logout),
+                 onPressed: (){
+                   provider.SimpleModalDialog(context);
+                 },
+               ),
+             )],
            ),
-           body: Container(
+           body: provider.state== ViewState.Fetching ? Center(child: CircularProgressIndicator(),) : Container(
              child: ListView(
                children: <Widget>[
                  Container(
@@ -53,129 +64,137 @@ class PusatBantuan extends StatelessWidget {
                  ),
                  SingleChildScrollView(
                    scrollDirection: Axis.horizontal,
+                   // child: Row(
+                   //   //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                   //   children: <Widget>[
+                   //
+                   //     Container(
+                   //       //margin: EdgeInsets.only(right: 8),
+                   //       width: 90,
+                   //       height: 100,
+                   //       child: Column(
+                   //         children: [
+                   //           IconButton(
+                   //             onPressed: (){
+                   //               Navigator.pushNamed(context, RouterAppStrings.submenuKategori, arguments: "Top Up");
+                   //             },
+                   //             iconSize: 42,
+                   //             icon: CircleAvatar(child: Icon(Icons.add)),
+                   //           ),
+                   //           Text('Top Up')
+                   //         ],
+                   //       ),
+                   //     ),
+                   //     Container(
+                   //       //margin: EdgeInsets.only(right: 8),
+                   //       width: 90,
+                   //       height: 100,
+                   //       child: Column(
+                   //         children: [
+                   //           IconButton(
+                   //             onPressed: (){
+                   //               Navigator.pushNamed(context, RouterAppStrings.submenuKategori, arguments: "Listrik PLN");
+                   //             },
+                   //             iconSize: 42,
+                   //             icon: CircleAvatar(child: Icon(Icons.bolt)),
+                   //           ),
+                   //           Text('Listrik PLN')
+                   //         ],
+                   //       ),
+                   //     ),
+                   //     Container(
+                   //       //margin: EdgeInsets.only(right: 8),
+                   //       width: 90,
+                   //       height: 100,
+                   //       child: Column(
+                   //         children: [
+                   //           IconButton(
+                   //             onPressed: (){
+                   //               Navigator.pushNamed(context, RouterAppStrings.submenuKategori,arguments: "Pulsa");
+                   //             },
+                   //             iconSize: 42,
+                   //             icon: CircleAvatar(child: Icon(Icons.smartphone)),
+                   //           ),
+                   //           Text('Pulsa')
+                   //         ],
+                   //       ),
+                   //     ),
+                   //     Container(
+                   //       //margin: EdgeInsets.only(right: 8),
+                   //       width: 90,
+                   //       height: 100,
+                   //       child: Column(
+                   //         children: [
+                   //           IconButton(
+                   //             onPressed: (){
+                   //               Navigator.pushNamed(context, RouterAppStrings.submenuKategori, arguments: "Voucher Game");
+                   //             },
+                   //             iconSize: 42,
+                   //             icon: CircleAvatar(child: Icon(Icons.sports_esports_rounded)),
+                   //           ),
+                   //           Text('Voucher Game', textAlign: TextAlign.center,)
+                   //         ],
+                   //       ),
+                   //     ),
+                   //     Container(
+                   //       //margin: EdgeInsets.only(right: 8),
+                   //       width: 90,
+                   //       height: 100,
+                   //       child: Column(
+                   //         children: [
+                   //           IconButton(
+                   //             onPressed: (){
+                   //               Navigator.pushNamed(context, RouterAppStrings.submenuKategori, arguments: "Angsuran Kredit");
+                   //             },
+                   //             iconSize: 42,
+                   //             icon: CircleAvatar(child: Icon(Icons.payment_rounded)),
+                   //           ),
+                   //           Text('Angsuran Kredit', textAlign: TextAlign.center,)
+                   //         ],
+                   //       ),
+                   //     ),
+                   //     Container(
+                   //       //margin: EdgeInsets.only(right: 8),
+                   //       width: 90,
+                   //       height: 100,
+                   //       child: Column(
+                   //         children: [
+                   //           IconButton(
+                   //             onPressed: (){
+                   //               Navigator.pushNamed(context, RouterAppStrings.submenuKategori, arguments: "Pengembalian Dana");
+                   //             },
+                   //             iconSize: 42,
+                   //             icon: CircleAvatar( child: Image(image: AssetImage('assets/refund.png'),),)
+                   //           ),
+                   //           Text('Pengembalian Dana', textAlign: TextAlign.center,)
+                   //         ],
+                   //       ),
+                   //     ),
+                   //   ],
+                   // ),
                    child: Row(
-                     //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                     children: <Widget>[
-                       Container(
-                         //margin: EdgeInsets.only(right: 8),
-                         width: 80,
-                         height: 100,
-                         child: Column(
-                           children: [
-                             IconButton(
-                               onPressed: (){
-                                 Navigator.pushNamed(context, RouterAppStrings.submenuKategori, arguments: "Akun");
-                               },
-                               iconSize: 42,
-                               icon: CircleAvatar(child: Icon(Icons.person)),
+                     children: provider.kategori.map((e) => Container(
+                       //margin: EdgeInsets.only(right: 8),
+                       width: 80,
+                       height: 100,
+                       child: Column(
+                         children: [
+                           IconButton(
+                             onPressed: (){
+                               Navigator.pushNamed(context, RouterAppStrings.submenuKategori, arguments: {'title': e.category, 'categoryId': e.id.toString()});
+                             },
+                             iconSize: 42,
+                             icon: CircleAvatar(child: Image(
+                               width: 24,
+                                 image: AssetImage(
+                                     e.icon),
                              ),
-                             Text('Akun')
-                           ],
-                         ),
-                       ),
-                       Container(
-                         //margin: EdgeInsets.only(right: 8),
-                         width: 90,
-                         height: 100,
-                         child: Column(
-                           children: [
-                             IconButton(
-                               onPressed: (){
-                                 Navigator.pushNamed(context, RouterAppStrings.submenuKategori, arguments: "Top Up");
-                               },
-                               iconSize: 42,
-                               icon: CircleAvatar(child: Icon(Icons.add)),
                              ),
-                             Text('Top Up')
-                           ],
-                         ),
+                           ),
+                           Text(e.category,textAlign: TextAlign.center,)
+                         ],
                        ),
-                       Container(
-                         //margin: EdgeInsets.only(right: 8),
-                         width: 90,
-                         height: 100,
-                         child: Column(
-                           children: [
-                             IconButton(
-                               onPressed: (){
-                                 Navigator.pushNamed(context, RouterAppStrings.submenuKategori, arguments: "Listrik PLN");
-                               },
-                               iconSize: 42,
-                               icon: CircleAvatar(child: Icon(Icons.bolt)),
-                             ),
-                             Text('Listrik PLN')
-                           ],
-                         ),
-                       ),
-                       Container(
-                         //margin: EdgeInsets.only(right: 8),
-                         width: 90,
-                         height: 100,
-                         child: Column(
-                           children: [
-                             IconButton(
-                               onPressed: (){
-                                 Navigator.pushNamed(context, RouterAppStrings.submenuKategori,arguments: "Pulsa");
-                               },
-                               iconSize: 42,
-                               icon: CircleAvatar(child: Icon(Icons.smartphone)),
-                             ),
-                             Text('Pulsa')
-                           ],
-                         ),
-                       ),
-                       Container(
-                         //margin: EdgeInsets.only(right: 8),
-                         width: 90,
-                         height: 100,
-                         child: Column(
-                           children: [
-                             IconButton(
-                               onPressed: (){
-                                 Navigator.pushNamed(context, RouterAppStrings.submenuKategori, arguments: "Voucher Game");
-                               },
-                               iconSize: 42,
-                               icon: CircleAvatar(child: Icon(Icons.sports_esports_rounded)),
-                             ),
-                             Text('Voucher Game', textAlign: TextAlign.center,)
-                           ],
-                         ),
-                       ),
-                       Container(
-                         //margin: EdgeInsets.only(right: 8),
-                         width: 90,
-                         height: 100,
-                         child: Column(
-                           children: [
-                             IconButton(
-                               onPressed: (){
-                                 Navigator.pushNamed(context, RouterAppStrings.submenuKategori, arguments: "Angsuran Kredit");
-                               },
-                               iconSize: 42,
-                               icon: CircleAvatar(child: Icon(Icons.payment_rounded)),
-                             ),
-                             Text('Angsuran Kredit', textAlign: TextAlign.center,)
-                           ],
-                         ),
-                       ),
-                       Container(
-                         //margin: EdgeInsets.only(right: 8),
-                         width: 90,
-                         height: 100,
-                         child: Column(
-                           children: [
-                             IconButton(
-                               onPressed: (){
-                                 Navigator.pushNamed(context, RouterAppStrings.submenuKategori, arguments: "Pengembalian Dana");
-                               },
-                               iconSize: 42,
-                               icon: CircleAvatar( child: Image(image: AssetImage('assets/refund.png'),),)
-                             ),
-                             Text('Pengembalian Dana', textAlign: TextAlign.center,)
-                           ],
-                         ),
-                       ),
-                     ],
+                     ),).toList(),
                    ),
                  ),
                  Container(
@@ -186,18 +205,20 @@ class PusatBantuan extends StatelessWidget {
                    ),
                  ),
                  ListView.builder(
-                     itemCount: provider.litems.length,
+                     itemCount: 6,
                      physics: NeverScrollableScrollPhysics(),
                      shrinkWrap: true,
                      itemBuilder: (BuildContext context, int index) {
                        return Card(
                          margin: EdgeInsets.only(left: 16, right: 16, bottom: 8),
-                         child: ListTile(
-                           onTap: () {
-                             Navigator.pushNamed(context, RouterAppStrings.detailBantuan);
-                           },
-                           title: Text(provider.litems[index]),
-                         ),
+                         child: Column(
+                           children: provider.subkategori.map((s) => ListTile(
+                             onTap: (){
+                               Navigator.pushNamed(context, RouterAppStrings.detailBantuan);
+                             },
+                             title: Text(s.pertanyaan),
+                           )).toList(),
+                         )
                        );
                      }),
                  Container(
