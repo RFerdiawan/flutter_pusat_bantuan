@@ -16,7 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class PusatBantuanProvider extends BaseProvider{
 
-  List<DataKategoriModel> kategori;
+  List<DataKategoriModel> kategori =[];
   CategoryService _service = locator<CategoryService>();
   Future init () async{
     try{

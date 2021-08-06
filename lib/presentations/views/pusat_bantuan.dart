@@ -6,7 +6,6 @@ import 'package:flutter_starter_provider/providers/pusat_bantuan_provider.dart';
 
 class PusatBantuan extends StatelessWidget {
 
-
   @override
   Widget build(BuildContext context) {
     return BaseView<PusatBantuanProvider>(
