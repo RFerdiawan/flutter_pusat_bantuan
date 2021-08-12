@@ -22,7 +22,9 @@ class RouterApp {
         );
         break;
       case RouterAppStrings.detailBantuan:
-        return MaterialPageRoute(builder: (_) => DetailBantuan()
+        var data3 = settings.arguments;
+        Map data4 = data3;
+        return MaterialPageRoute(builder: (_) => DetailBantuan(title: data4['title'], id: data4['id'],)
         );
         break;
       case RouterAppStrings.submenuKategori:

@@ -17,11 +17,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PusatBantuanProvider extends BaseProvider{
 
   List<DataKategoriModel> kategori =[];
+  List<DataSubkategoriModel> subkategori =[];
   CategoryService _service = locator<CategoryService>();
+  SubcategoryService _services = locator<SubcategoryService>();
   Future init () async{
     try{
       setState(ViewState.Fetching);
       kategori = await _service.getCategory();
+      subkategori = await _services.getPertanyaan();
       setState(ViewState.Idle);
     }
     on SocketException catch(e){
@@ -32,31 +35,6 @@ class PusatBantuanProvider extends BaseProvider{
       setState(ViewState.FetchNull);
     }
   }
-
-  List<DataSubkategoriModel> subkategori;
-  SubcategoryService _services = locator<SubcategoryService>();
-  Future initsub () async{
-    try{
-      setState(ViewState.Fetching);
-      kategori = await _services.getPertanyaan();
-      setState(ViewState.Idle);
-    }
-    on SocketException catch(s){
-      setState(ViewState.ErrConnection);
-    }
-    catch(s){
-      setState(ViewState.FetchNull);
-    }
-  }
-
-  //List<String> litems = [
-  //  "Saya lupa kata sandi Digidesa",
-  //  "Akun saya tidak bisa melakukan top-up",
-  //  "Bagaimana saya dapat mengetahui nomor token PLN yang telah dibayar?",
-  //  "Bagaimana jika pembelian voucher game saya gagal?",
-    //"Saya tidak bisa melakukan transaksi angsuran kredit",
-    //"Saya belum menerima pengembalian dana yang terdebit lebih dari satu kali"
-  //];
 
   String greeting() {
     var jam = DateTime.now().hour;

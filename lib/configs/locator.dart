@@ -1,5 +1,4 @@
-import 'package:flutter_starter_provider/presentations/views/detail_bantuan.dart';
-import 'package:flutter_starter_provider/presentations/views/submenu_kategori.dart';
+import 'package:flutter_starter_provider/providers/detail_bantuan_provider.dart';
 import 'package:flutter_starter_provider/providers/home_providers.dart';
 import 'package:flutter_starter_provider/providers/login_providers.dart';
 import 'package:flutter_starter_provider/providers/main_provider.dart';
@@ -24,6 +23,7 @@ void setupLocator() {
   locator.registerFactory(() => PusatBantuanProvider());
   locator.registerFactory(() => MainProvider());
   locator.registerFactory(() => SubmenuKategoriProvider());
+  locator.registerFactory(() => DetailBantuanProvider());
 
 
 }

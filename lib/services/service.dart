@@ -10,7 +10,7 @@ class Service {
   String url = '';
   Dio dio = locator<ApiInterceptors>().dio;
 
-  String baseUrl = 'http://127.0.0.1:8000/bantuan_API/public/api';
+  String baseUrl = 'http://192.168.100.11:8000/bantuan_API/public/api';
 
   Future getWithCache(String url,
       {Duration duration,

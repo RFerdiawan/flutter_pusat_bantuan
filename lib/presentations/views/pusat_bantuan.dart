@@ -208,16 +208,15 @@ class PusatBantuan extends StatelessWidget {
                      physics: NeverScrollableScrollPhysics(),
                      shrinkWrap: true,
                      itemBuilder: (BuildContext context, int index) {
-                       return Card(
-                         margin: EdgeInsets.only(left: 16, right: 16, bottom: 8),
-                         child: Column(
-                           children: provider.subkategori.map((s) => ListTile(
-                             onTap: (){
-                               Navigator.pushNamed(context, RouterAppStrings.detailBantuan);
-                             },
-                             title: Text(s.pertanyaan),
+                       return Column(
+                           children: provider.subkategori.map((e) => Card(
+                             child: ListTile(
+                               onTap: (){
+                                 Navigator.pushNamed(context, RouterAppStrings.detailBantuan, arguments: {'title': e.pertanyaan, 'id': e.id.toString()});
+                               },
+                               title: Text(e.pertanyaan),
+                             ),
                            )).toList(),
-                         )
                        );
                      }),
                  Container(
