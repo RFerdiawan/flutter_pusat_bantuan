@@ -31,7 +31,7 @@ class PusatBantuan extends StatelessWidget {
                  Container(
                    margin: EdgeInsets.only(bottom: 8, left: 16, top: 16),
                    child: Text('Selamat ' + provider.greeting(),
-                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
                  ),
                  Container(
                    margin: EdgeInsets.only(bottom: 16, left: 16),
@@ -52,7 +52,11 @@ class PusatBantuan extends StatelessWidget {
                          hintStyle: TextStyle(fontSize: 18),
                          border:
                          OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-                       )),
+                       ),
+                     onFieldSubmitted: (value){
+                       Navigator.pushNamed(context, RouterAppStrings.search, arguments: {'pertanyaan' : value});
+                     },
+                   ),
                  ),
                  Container(
                    margin: EdgeInsets.only(bottom: 8, left: 16),
@@ -63,114 +67,6 @@ class PusatBantuan extends StatelessWidget {
                  ),
                  SingleChildScrollView(
                    scrollDirection: Axis.horizontal,
-                   // child: Row(
-                   //   //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                   //   children: <Widget>[
-                   //
-                   //     Container(
-                   //       //margin: EdgeInsets.only(right: 8),
-                   //       width: 90,
-                   //       height: 100,
-                   //       child: Column(
-                   //         children: [
-                   //           IconButton(
-                   //             onPressed: (){
-                   //               Navigator.pushNamed(context, RouterAppStrings.submenuKategori, arguments: "Top Up");
-                   //             },
-                   //             iconSize: 42,
-                   //             icon: CircleAvatar(child: Icon(Icons.add)),
-                   //           ),
-                   //           Text('Top Up')
-                   //         ],
-                   //       ),
-                   //     ),
-                   //     Container(
-                   //       //margin: EdgeInsets.only(right: 8),
-                   //       width: 90,
-                   //       height: 100,
-                   //       child: Column(
-                   //         children: [
-                   //           IconButton(
-                   //             onPressed: (){
-                   //               Navigator.pushNamed(context, RouterAppStrings.submenuKategori, arguments: "Listrik PLN");
-                   //             },
-                   //             iconSize: 42,
-                   //             icon: CircleAvatar(child: Icon(Icons.bolt)),
-                   //           ),
-                   //           Text('Listrik PLN')
-                   //         ],
-                   //       ),
-                   //     ),
-                   //     Container(
-                   //       //margin: EdgeInsets.only(right: 8),
-                   //       width: 90,
-                   //       height: 100,
-                   //       child: Column(
-                   //         children: [
-                   //           IconButton(
-                   //             onPressed: (){
-                   //               Navigator.pushNamed(context, RouterAppStrings.submenuKategori,arguments: "Pulsa");
-                   //             },
-                   //             iconSize: 42,
-                   //             icon: CircleAvatar(child: Icon(Icons.smartphone)),
-                   //           ),
-                   //           Text('Pulsa')
-                   //         ],
-                   //       ),
-                   //     ),
-                   //     Container(
-                   //       //margin: EdgeInsets.only(right: 8),
-                   //       width: 90,
-                   //       height: 100,
-                   //       child: Column(
-                   //         children: [
-                   //           IconButton(
-                   //             onPressed: (){
-                   //               Navigator.pushNamed(context, RouterAppStrings.submenuKategori, arguments: "Voucher Game");
-                   //             },
-                   //             iconSize: 42,
-                   //             icon: CircleAvatar(child: Icon(Icons.sports_esports_rounded)),
-                   //           ),
-                   //           Text('Voucher Game', textAlign: TextAlign.center,)
-                   //         ],
-                   //       ),
-                   //     ),
-                   //     Container(
-                   //       //margin: EdgeInsets.only(right: 8),
-                   //       width: 90,
-                   //       height: 100,
-                   //       child: Column(
-                   //         children: [
-                   //           IconButton(
-                   //             onPressed: (){
-                   //               Navigator.pushNamed(context, RouterAppStrings.submenuKategori, arguments: "Angsuran Kredit");
-                   //             },
-                   //             iconSize: 42,
-                   //             icon: CircleAvatar(child: Icon(Icons.payment_rounded)),
-                   //           ),
-                   //           Text('Angsuran Kredit', textAlign: TextAlign.center,)
-                   //         ],
-                   //       ),
-                   //     ),
-                   //     Container(
-                   //       //margin: EdgeInsets.only(right: 8),
-                   //       width: 90,
-                   //       height: 100,
-                   //       child: Column(
-                   //         children: [
-                   //           IconButton(
-                   //             onPressed: (){
-                   //               Navigator.pushNamed(context, RouterAppStrings.submenuKategori, arguments: "Pengembalian Dana");
-                   //             },
-                   //             iconSize: 42,
-                   //             icon: CircleAvatar( child: Image(image: AssetImage('assets/refund.png'),),)
-                   //           ),
-                   //           Text('Pengembalian Dana', textAlign: TextAlign.center,)
-                   //         ],
-                   //       ),
-                   //     ),
-                   //   ],
-                   // ),
                    child: Row(
                      children: provider.kategori.map((e) => Container(
                        //margin: EdgeInsets.only(right: 8),
@@ -204,19 +100,18 @@ class PusatBantuan extends StatelessWidget {
                    ),
                  ),
                  ListView.builder(
+                     padding: EdgeInsets.only(left: 8, right: 8),
                      itemCount: 6,
                      physics: NeverScrollableScrollPhysics(),
                      shrinkWrap: true,
                      itemBuilder: (BuildContext context, int index) {
-                       return Column(
-                           children: provider.subkategori.map((e) => Card(
-                             child: ListTile(
-                               onTap: (){
-                                 Navigator.pushNamed(context, RouterAppStrings.detailBantuan, arguments: {'title': e.pertanyaan, 'id': e.id.toString()});
-                               },
-                               title: Text(e.pertanyaan),
-                             ),
-                           )).toList(),
+                       return Card(
+                         child: ListTile(
+                           onTap: (){
+                             Navigator.pushNamed(context, RouterAppStrings.detailBantuan, arguments: {'title': provider.subkategori[index].pertanyaan, 'id': provider.subkategori[index].id.toString()});
+                           },
+                           title: Text(provider.subkategori[index].pertanyaan),
+                         ),
                        );
                      }),
                  Container(

@@ -72,4 +72,26 @@ class SubcategoryService extends Service{
       }
     }
   }
+
+  Future getPencarian(String pertanyaan) async {
+    try {
+      var url = '/search?pertanyaan=$pertanyaan';
+
+      var response = await get(url);
+      print(response.data);
+      if (response.statusCode == 200) {
+        List<DataSubkategoriModel>dataSubkategoriModel= dataSubkategoriModelFromJson(jsonEncode(response.data));
+        return dataSubkategoriModel;
+      } else {
+        throw ('data tidak ditemukan');
+      }
+    } on SocketException catch (_) {
+      throw SocketException('no_internet');
+    } catch (error) {
+      if (error is DioError) {
+        print(error.response.statusCode);
+        throw (error.response.statusCode);
+      }
+    }
+  }
 }

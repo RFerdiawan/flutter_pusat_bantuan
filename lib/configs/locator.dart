@@ -3,6 +3,7 @@ import 'package:flutter_starter_provider/providers/home_providers.dart';
 import 'package:flutter_starter_provider/providers/login_providers.dart';
 import 'package:flutter_starter_provider/providers/main_provider.dart';
 import 'package:flutter_starter_provider/providers/pusat_bantuan_provider.dart';
+import 'package:flutter_starter_provider/providers/search_provider.dart';
 import 'package:flutter_starter_provider/providers/submenu_kategori_provider.dart';
 import 'package:flutter_starter_provider/services/api_interceptors.dart';
 import 'package:flutter_starter_provider/services/auth_service.dart';
@@ -24,6 +25,7 @@ void setupLocator() {
   locator.registerFactory(() => MainProvider());
   locator.registerFactory(() => SubmenuKategoriProvider());
   locator.registerFactory(() => DetailBantuanProvider());
+  locator.registerFactory(() => SearchProvider());
 
 
 }

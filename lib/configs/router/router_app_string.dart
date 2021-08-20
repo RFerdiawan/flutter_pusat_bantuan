@@ -4,4 +4,6 @@ class RouterAppStrings{
   static const String pusatBantuan = 'pusat-bantuan';
   static const String detailBantuan = 'detail-bantuan';
   static const String submenuKategori = 'submenu-kategori';
+  static const String search = 'search';
+
 }

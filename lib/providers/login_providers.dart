@@ -14,7 +14,7 @@ class LoginProviders extends BaseProvider{
   Future<bool> loginWithCredentials() async {
     try {
       Response res = await authService.postLogin(jsonEncode(this.dataLogin));
-      print(res);
+      print('asd222');
       if(res != null){
         SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
         sharedPreferences.setBool('isLogin', true);

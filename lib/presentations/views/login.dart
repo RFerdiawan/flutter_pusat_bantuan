@@ -64,7 +64,7 @@ class _LoginState extends State<Login> {
                 ),
                 SizedBox(
 
-                  width: MediaQuery.of(context).size.width,
+                  width: 370.0,
                   child: RaisedButton(
                     padding: EdgeInsets.all(16),
                     onPressed: () async{
@@ -73,7 +73,7 @@ class _LoginState extends State<Login> {
                       bool load = await provider.loginWithCredentials();
                       EasyLoading.dismiss();
                       if(load){
-                        Navigator.pushNamed(context, RouterAppStrings.pusatBantuan);
+                        Navigator.pushNamedAndRemoveUntil(context, RouterAppStrings.pusatBantuan, (route) => false);
                       } else{
                         EasyLoading.showToast('Login gagal');
                       }

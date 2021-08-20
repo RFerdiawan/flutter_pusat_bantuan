@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_starter_provider/presentations/views/home.dart';
 import 'package:flutter_starter_provider/presentations/views/login.dart';
 import 'package:flutter_starter_provider/presentations/views/pusat_bantuan.dart';
@@ -39,8 +40,9 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: PusatBantuan(),//initialRoute == 'login' ? Login() : PusatBantuan(),
+      home: initialRoute == 'login' ? Login() : PusatBantuan(), //PusatBantuan();
       onGenerateRoute: RouterApp.onGenerateRoute,
+      builder: EasyLoading.init(),
 
     );
   }

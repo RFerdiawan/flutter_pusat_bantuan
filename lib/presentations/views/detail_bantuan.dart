@@ -3,15 +3,20 @@ import 'package:flutter_starter_provider/configs/constants/view_state.dart';
 import 'package:flutter_starter_provider/presentations/views/base_view.dart';
 import 'package:flutter_starter_provider/providers/detail_bantuan_provider.dart';
 
-class DetailBantuan extends StatelessWidget {
+class DetailBantuan extends StatefulWidget {
   final String id;
   final String title;
   const DetailBantuan({Key key, this.title, this.id}) : super(key: key);
 
   @override
+  _DetailBantuanState createState() => _DetailBantuanState();
+}
+
+class _DetailBantuanState extends State<DetailBantuan> {
+  @override
   Widget build(BuildContext context) {
     return BaseView<DetailBantuanProvider>(
-      onModelReady: (model) => model.init(id),
+      onModelReady: (model) => model.init(widget.id),
       builder: (context, provider, child){
         return Scaffold(
           appBar: AppBar(
@@ -58,8 +63,12 @@ class DetailBantuan extends StatelessWidget {
                           children: [
                             IconButton(
                                 iconSize: 42,
-                                icon: CircleAvatar(child: Icon(Icons.thumb_up, color: Colors.grey,), backgroundColor: Colors.grey[300],),
-                                onPressed: (){}
+                                icon: CircleAvatar(child: Icon(Icons.thumb_up, color: provider.yaditekan ? Colors.blue : Colors.grey,), backgroundColor: Colors.grey[300],),
+                                onPressed: () => {
+                                  setState((){
+                                    provider.yaditekan = !provider.yaditekan && !provider.tidakditekan;
+                                  })
+                                }
                             ),
                             Text('Ya', style: TextStyle(fontWeight: FontWeight.w700, color: Colors.grey),)
                           ],
@@ -74,11 +83,15 @@ class DetailBantuan extends StatelessWidget {
                               icon: CircleAvatar(
                                   child: Icon(
                                     Icons.thumb_down,
-                                    color: Colors.grey,
+                                    color: provider.tidakditekan ? Colors.red : Colors.grey,
                                   ),
                                   backgroundColor: Colors.grey[300]
                               ),
-                              onPressed: (){},
+                              onPressed: () => {
+                                setState((){
+                                  provider.tidakditekan = !provider.tidakditekan && !provider.yaditekan;
+                                })
+                              },
                             ),
                             Text(
                               'Tidak',
@@ -93,44 +106,45 @@ class DetailBantuan extends StatelessWidget {
                   ),
                 ],
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 50),
-                child: Container(
-                    height: 70,
-                    width: double.maxFinite,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[300],
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                            margin: EdgeInsets.only(left: 16),
-                            child: Text(
-                              'Masih belum terjawab?',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w700),
-                            )),
-                        Container(
-                          margin: EdgeInsets.only(right: 16),
-                          child: RaisedButton(
-                            color: Colors.indigo,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            onPressed: () {},
-                            child: Container(
-                              child: Text(
-                                'Mulai Chat',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
+
+            ],
+          ),
+          bottomSheet: Padding(
+            padding: EdgeInsets.only(top: 50),
+            child: Container(
+                height: 70,
+                width: double.maxFinite,
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                        margin: EdgeInsets.only(left: 16),
+                        child: Text(
+                          'Masih belum terjawab?',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w700),
+                        )),
+                    Container(
+                      margin: EdgeInsets.only(right: 16),
+                      child: RaisedButton(
+                        color: Colors.indigo,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        onPressed: () {},
+                        child: Container(
+                          child: Text(
+                            'Mulai Chat',
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
-                      ],
-                    )),
-              )
-            ],
+                      ),
+                    ),
+                  ],
+                )),
           ),
         );
       }

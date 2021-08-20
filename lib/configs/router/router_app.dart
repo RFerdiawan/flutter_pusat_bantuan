@@ -4,6 +4,7 @@ import 'package:flutter_starter_provider/presentations/views/detail_bantuan.dart
 import 'package:flutter_starter_provider/presentations/views/home.dart';
 import 'package:flutter_starter_provider/presentations/views/login.dart';
 import 'package:flutter_starter_provider/presentations/views/pusat_bantuan.dart';
+import 'package:flutter_starter_provider/presentations/views/search.dart';
 import 'package:flutter_starter_provider/presentations/views/submenu_kategori.dart';
 
 class RouterApp {
@@ -31,6 +32,12 @@ class RouterApp {
         var data = settings.arguments;
         Map data2 = data;
         return MaterialPageRoute(builder: (_) => SubmenuKategori(title: data2['title'],categoryId: data2['categoryId'],)
+        );
+        break;
+      case RouterAppStrings.search:
+        var data5 = settings.arguments;
+        Map data6 = data5;
+        return MaterialPageRoute(builder: (_) => Search(pertanyaan: data6['pertanyaan'],),
         );
         break;
       default:

@@ -18,6 +18,7 @@ class PusatBantuanProvider extends BaseProvider{
 
   List<DataKategoriModel> kategori =[];
   List<DataSubkategoriModel> subkategori =[];
+  Map dataSearch = {'pertanyaan' : ''};
   CategoryService _service = locator<CategoryService>();
   SubcategoryService _services = locator<SubcategoryService>();
   Future init () async{

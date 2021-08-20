@@ -10,7 +10,7 @@ class Service {
   String url = '';
   Dio dio = locator<ApiInterceptors>().dio;
 
-  String baseUrl = 'http://192.168.100.11:8000/bantuan_API/public/api';
+  String baseUrl = 'http://192.168.48.229:8000/bantuan_API/public/api';
 
   Future getWithCache(String url,
       {Duration duration,
@@ -19,7 +19,6 @@ class Service {
         bool isRefresh = false}) async {
     url = baseUrl + url;
     print(url);
-    if (await locator<ApiInterceptors>().checkConnection()) {
       final response = dio.get(url,
           options: buildCacheOptions(duration,
               primaryKey: key,
@@ -28,23 +27,14 @@ class Service {
               forceRefresh: isRefresh,
               options: Options(headers: {'requiresToken': true})));
       return response;
-    } else {
-      print('no');
-      throw SocketException('no_internet');
-    }
   }
 
   Future get(String url) async {
     try {
       url = baseUrl + url;
       print(url);
-      if (await locator<ApiInterceptors>().checkConnection()) {
         final response = dio.get(url);
         return response;
-      } else {
-        print('no');
-        throw SocketException('no_internet');
-      }
     } on DioError catch (e) {
       if (e.type == DioErrorType.CONNECT_TIMEOUT) {
         print('timeout');
@@ -57,7 +47,7 @@ class Service {
 
   Future postLogin2(String url, var data) async {
     url = baseUrl + url;
-    if (await locator<ApiInterceptors>().checkConnection()) {
+    print(url);
       print(data);
       final Response response = await dio.post(url,
           options: Options(headers: {
@@ -65,17 +55,14 @@ class Service {
             'Accept': 'application/json',
           }),
           data: data);
+      print(response);
       return response;
-    } else {
-      print('no');
-      throw SocketException('no_internet');
-    }
+
   }
 
   Future post(String url, var data) async {
     url = baseUrl + url;
     print(url);
-    if (await locator<ApiInterceptors>().checkConnection()) {
       final response = await dio.post(url,
           options: Options(headers: {
             'Content-Type': 'application/json',
@@ -83,16 +70,11 @@ class Service {
           }),
           data: data);
       return response;
-    } else {
-      print('no');
-      throw SocketException('no_internet');
-    }
   }
 
   Future put(String url, var data) async {
     url = baseUrl + url;
     print(url);
-    if (await locator<ApiInterceptors>().checkConnection()) {
       final response = await dio.put(url,
           options: Options(headers: {
             'Content-Type': 'application/json',
@@ -100,16 +82,11 @@ class Service {
           }),
           data: data);
       return response;
-    } else {
-      print('no');
-      throw SocketException('no_internet');
-    }
   }
 
   Future patch(String url, var data) async {
     url = baseUrl + url;
     print(url);
-    if (await locator<ApiInterceptors>().checkConnection()) {
       final response = await dio.patch(url,
           options: Options(headers: {
             'Content-Type': 'application/json',
@@ -118,9 +95,5 @@ class Service {
           }),
           data: data);
       return response;
-    } else {
-      print('no');
-      throw SocketException('no_internet');
-    }
   }
 }
